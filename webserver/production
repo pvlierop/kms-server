@@ -1,0 +1,3 @@
+
+[webservers]
+kms-server-01 ansible_host=109.74.205.239
