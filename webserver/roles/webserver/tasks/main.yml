@@ -3,7 +3,9 @@
   apt: name={{ item }} state=latest
   with_items:
      - apache2
-     - python-passlib
+
+- name: Copy index file configuration
+  copy: src=files/index.html dest=/var/www/html/
 
 - name: Copy website configuration
   copy: src=files/001-Website.conf dest=/etc/apache2/sites-available/
