@@ -1,0 +1,35 @@
+---
+- name: Install apache software
+  apt: name={{ item }} state=latest
+  with_items:
+     - apache2
+     - python-passlib
+
+- name: Copy website configuration
+  copy: src=files/001-Website.conf dest=/etc/apache2/sites-available/
+  notify:
+    - restart apache
+
+- name: Disable default website
+  shell: a2dissite 000-default
+  notify:
+    - restart apache
+
+- name: Enable New website
+  shell: a2ensite 001-Website
+  notify:
+    - restart apache
+
+- name: Copy website user files
+  copy: src=files/passwdfile dest=/etc/apache2/
+  notify:
+    - restart apache
+
+- name: Change file permission
+  file: path=/etc/apache2/passwdfile mode=644
+
+- name: Make sure apache service are started
+  service: name={{ item }} state=started
+  with_items:
+     - apache2
+

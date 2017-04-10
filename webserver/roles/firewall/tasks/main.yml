@@ -1,0 +1,10 @@
+---
+
+- name : enable Ubuntu Firewall
+  ufw: state=enabled policy=deny
+
+- name: Allow ssh service 
+  ufw: rule=allow port=22
+
+- name: Allow apache service 
+  ufw: rule=allow port=80
